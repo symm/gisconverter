@@ -21,6 +21,11 @@ abstract class Geometry implements GeometryInterface
         $this->attributes = $attributes;
     }
 
+    public function toGeoArray()
+    {
+        throw new UnimplementedMethod(__FUNCTION__, get_called_class());
+    }
+
     public function toGeoJSON()
     {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());

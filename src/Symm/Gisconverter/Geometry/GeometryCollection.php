@@ -32,19 +32,22 @@ class GeometryCollection extends Collection
         ')';
     }
 
-    public function toGeoJSON()
+    public function toGeoArray()
     {
-        $value = (object) array (
+        $value = array (
             'type' => static::name,
             'geometries' => array_map(
                 function ($comp) {
-                    // XXX: quite ugly
-                    return json_decode($comp->toGeoJSON());
+                    return $comp->toGeoArray();
                 },
                 $this->components
             )
         );
+        return $value;
+    }
 
-        return json_encode($value);
+    public function toGeoJSON()
+    {
+        return json_encode((object) $this->toGeoArray());
     }
 }
