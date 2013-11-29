@@ -12,21 +12,10 @@ use Symm\Gisconverter\Exceptions\InvalidText;
 use Symm\Gisconverter\Exceptions\InvalidFeature;
 use Symm\Gisconverter\Exceptions\OutOfRangeLon;
 use Symm\Gisconverter\Exceptions\OutOfRangeLat;
+use Symm\Gisconverter\Interfaces\DecoderInterface;
 
+use Symm\Gisconverter\Decoders\Decoder;
 
-interface iDecoder {
-    /*
-     * @param string $text
-     * @return Geometry
-     */
-    static public function geomFromText($text);
-}
-
-abstract class Decoder implements iDecoder {
-    static public function geomFromText($text) {
-        throw new UnimplementedMethod(__FUNCTION__, get_called_class());
-    }
-}
 
 interface iGeometry {
     /*
