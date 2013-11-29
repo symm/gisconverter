@@ -10,14 +10,7 @@ use Symm\Gisconverter\Exceptions\Unimplemented;
 use Symm\Gisconverter\Exceptions\UnimplementedMethod;
 use Symm\Gisconverter\Exceptions\UnavailableResource;
 use Symm\Gisconverter\Exceptions\InvalidText;
-
-
-
-class InvalidFeature extends CustomException {
-    public function __construct($decoder_name, $text = "") {
-        $this->message =  "invalid feature for decoder $decoder_name" . ($text ? ": $text" : "");
-    }
-}
+use Symm\Gisconverter\Exceptions\InvalidFeature;
 
 abstract class OutOfRangeCoord extends CustomException {
     private $coord;
