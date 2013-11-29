@@ -5,7 +5,7 @@ class GeoJSON extends PHPUnit_Framework_TestCase {
 
     public function setup() {
         if (!$this->decoder) {
-            $this->decoder = new gisconverter\GeoJSON();
+            $this->decoder = new Symm\Gisconverter\Decoders\GeoJSON();
         }
     }
 

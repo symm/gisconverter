@@ -6,7 +6,7 @@ class Equal extends PHPUnit_Framework_TestCase {
 
     public function setup() {
         if (!$this->default_decoder) {
-            $this->default_decoder = new gisconverter\WKT();
+            $this->default_decoder = new Symm\Gisconverter\Decoders\WKT();
         }
     }
 
