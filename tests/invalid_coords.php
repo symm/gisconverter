@@ -20,42 +20,42 @@ class InvalidCoords extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLon
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLon
      */
     public function testOorLon1 () {
         $this->default_decoder->geomFromText("POINT (181 10)");
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLon
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLon
      */
     public function testOorLon2 () {
         $this->default_decoder->geomFromText("POINT (-181 10)");
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLon
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLon
      */
     public function testOorLon3 () {
         $this->default_decoder->geomFromText("POINT (crap 10)");
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLat
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLat
      */
     public function testOorLat1 () {
         $this->default_decoder->geomFromText("POINT (10 91)");
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLat
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLat
      */
     public function testOorLat2 () {
         $this->default_decoder->geomFromText("POINT (10 -91)");
     }
 
     /**
-     * @expectedException gisconverter\OutOfRangeLat
+     * @expectedException Symm\Gisconverter\Exceptions\OutOfRangeLat
      */
     public function testOorLat3 () {
         $this->default_decoder->geomFromText("POINT (10 crap)");
@@ -63,4 +63,3 @@ class InvalidCoords extends PHPUnit_Framework_TestCase {
 
 }
 
-?>

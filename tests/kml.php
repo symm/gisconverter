@@ -10,14 +10,14 @@ class KML extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText1 () {
         $this->decoder->geomFromText('<Crap></Crap>');
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText2 () {
         $this->decoder->geomFromText('<Point><coordinates>10, 10<coordinates></Point>');
@@ -38,14 +38,14 @@ class KML extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidPoint1 () {
         $this->decoder->geomFromText('<Point>10, 10</Point>');
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidPoint2 () {
         $this->decoder->geomFromText('<Point><coordinates>10, 10</coordinates><coordinates>10, 10</coordinates></Point>');
@@ -70,7 +70,7 @@ class KML extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidPolygon() {
         $geom = $this->decoder->geomFromText('<Polygon><innerBoundaryIs><LinearRing><coordinates>1,1 9,1 9,9 1,9 1,1</coordinates></LinearRing></innerBoundaryIs></Polygon>');

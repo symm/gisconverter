@@ -10,21 +10,21 @@ class GeoJSON extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText1 () {
         $this->decoder->geomFromText('{"type":"Crap","coordinates":[10,10]}');
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText2 () {
         $this->decoder->geomFromText('{"crap":"Point","coordinates":[10,10]}');
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText3 () {
         $this->decoder->geomFromText('{not well formed}');
@@ -42,7 +42,7 @@ class GeoJSON extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidPoint () {
         $this->decoder->geomFromText('{"type": "Point"}');

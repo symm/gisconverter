@@ -10,14 +10,14 @@ class WKT extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText1 () {
         $this->decoder->geomFromText('CRAP');
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText2 () {
         $this->decoder->geomFromText('CRAP ()');

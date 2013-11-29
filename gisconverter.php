@@ -5,57 +5,14 @@
 
 namespace gisconverter;
 
-abstract class CustomException extends \Exception {
-    protected $message;
-    public function __toString() {
-        return get_class($this) . " {$this->message} in {$this->file}({$this->line})\n{$this->getTraceAsString()}";
-    }
-}
+use Symm\Gisconverter\Exceptions\Unimplemented;
+use Symm\Gisconverter\Exceptions\UnimplementedMethod;
+use Symm\Gisconverter\Exceptions\UnavailableResource;
+use Symm\Gisconverter\Exceptions\InvalidText;
+use Symm\Gisconverter\Exceptions\InvalidFeature;
+use Symm\Gisconverter\Exceptions\OutOfRangeLon;
+use Symm\Gisconverter\Exceptions\OutOfRangeLat;
 
-class Unimplemented extends CustomException {
-    public function __construct($message) {
-        $this->message = "unimplemented $message";
-    }
-}
-
-class UnimplementedMethod extends Unimplemented {
-    public function __construct($method, $class) {
-        $this->message = "method {$this->class}::{$this->method}";
-    }
-}
-
-class InvalidText extends CustomException {
-    public function __construct($decoder_name, $text = "") {
-        $this->message =  "invalid text for decoder " . $decoder_name . ($text ? (": " . $text) : "");
-    }
-}
-
-class InvalidFeature extends CustomException {
-    public function __construct($decoder_name, $text = "") {
-        $this->message =  "invalid feature for decoder $decoder_name" . ($text ? ": $text" : "");
-    }
-}
-
-abstract class OutOfRangeCoord extends CustomException {
-    private $coord;
-    public $type;
-
-    public function __construct($coord) {
-        $this->message = "invalid {$this->type}: $coord";
-    }
-}
-class OutOfRangeLon extends outOfRangeCoord {
-    public $type = "longitude";
-}
-class OutOfRangeLat extends outOfRangeCoord {
-    public $type = "latitude";
-}
-
-class UnavailableResource extends CustomException {
-    public function __construct($ressource) {
-        $this->message = "unavailable ressource: $ressource";
-    }
-}
 
 interface iDecoder {
     /*
