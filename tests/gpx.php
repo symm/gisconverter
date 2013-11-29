@@ -10,7 +10,7 @@ class GPX extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidText1 () {
         $this->decoder->geomFromText('<Crap></Crap>');
@@ -25,7 +25,7 @@ class GPX extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException gisconverter\InvalidText
+     * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
     public function testInvalidTracks () {
         $this->decoder->geomFromText('<trkseg><trkpt lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg>');

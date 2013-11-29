@@ -8,13 +8,10 @@ namespace gisconverter;
 use Symm\Gisconverter\Exceptions\CustomException;
 use Symm\Gisconverter\Exceptions\Unimplemented;
 use Symm\Gisconverter\Exceptions\UnimplementedMethod;
+use Symm\Gisconverter\Exceptions\UnavailableResource;
+use Symm\Gisconverter\Exceptions\InvalidText;
 
 
-class InvalidText extends CustomException {
-    public function __construct($decoder_name, $text = "") {
-        $this->message =  "invalid text for decoder " . $decoder_name . ($text ? (": " . $text) : "");
-    }
-}
 
 class InvalidFeature extends CustomException {
     public function __construct($decoder_name, $text = "") {
@@ -37,11 +34,6 @@ class OutOfRangeLat extends outOfRangeCoord {
     public $type = "latitude";
 }
 
-class UnavailableResource extends CustomException {
-    public function __construct($ressource) {
-        $this->message = "unavailable ressource: $ressource";
-    }
-}
 
 interface iDecoder {
     /*
