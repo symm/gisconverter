@@ -5,13 +5,11 @@
 
 namespace gisconverter;
 
-use Symm\Gisconverter\Exceptions\CustomException;
 use Symm\Gisconverter\Exceptions\Unimplemented;
 use Symm\Gisconverter\Exceptions\UnimplementedMethod;
 use Symm\Gisconverter\Exceptions\UnavailableResource;
 use Symm\Gisconverter\Exceptions\InvalidText;
 use Symm\Gisconverter\Exceptions\InvalidFeature;
-use Symm\Gisconverter\Exceptions\OutOfRangeCoord;
 use Symm\Gisconverter\Exceptions\OutOfRangeLon;
 use Symm\Gisconverter\Exceptions\OutOfRangeLat;
 
