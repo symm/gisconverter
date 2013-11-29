@@ -11,21 +11,9 @@ use Symm\Gisconverter\Exceptions\UnimplementedMethod;
 use Symm\Gisconverter\Exceptions\UnavailableResource;
 use Symm\Gisconverter\Exceptions\InvalidText;
 use Symm\Gisconverter\Exceptions\InvalidFeature;
-
-abstract class OutOfRangeCoord extends CustomException {
-    private $coord;
-    public $type;
-
-    public function __construct($coord) {
-        $this->message = "invalid {$this->type}: $coord";
-    }
-}
-class OutOfRangeLon extends outOfRangeCoord {
-    public $type = "longitude";
-}
-class OutOfRangeLat extends outOfRangeCoord {
-    public $type = "latitude";
-}
+use Symm\Gisconverter\Exceptions\OutOfRangeCoord;
+use Symm\Gisconverter\Exceptions\OutOfRangeLon;
+use Symm\Gisconverter\Exceptions\OutOfRangeLat;
 
 
 interface iDecoder {
