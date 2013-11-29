@@ -5,24 +5,10 @@
 
 namespace gisconverter;
 
-abstract class CustomException extends \Exception {
-    protected $message;
-    public function __toString() {
-        return get_class($this) . " {$this->message} in {$this->file}({$this->line})\n{$this->getTraceAsString()}";
-    }
-}
+use Symm\Gisconverter\Exceptions\CustomException;
+use Symm\Gisconverter\Exceptions\Unimplemented;
+use Symm\Gisconverter\Exceptions\UnimplementedMethod;
 
-class Unimplemented extends CustomException {
-    public function __construct($message) {
-        $this->message = "unimplemented $message";
-    }
-}
-
-class UnimplementedMethod extends Unimplemented {
-    public function __construct($method, $class) {
-        $this->message = "method {$this->class}::{$this->method}";
-    }
-}
 
 class InvalidText extends CustomException {
     public function __construct($decoder_name, $text = "") {
