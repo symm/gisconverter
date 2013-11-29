@@ -8,12 +8,13 @@
 
 namespace Symm\Gisconverter\Exceptions;
 
-
-abstract class OutOfRangeCoord extends CustomException {
+abstract class OutOfRangeCoord extends CustomException
+{
     private $coord;
     public $type;
 
-    public function __construct($coord) {
+    public function __construct($coord)
+    {
         $this->message = "invalid {$this->type}: $coord";
     }
 }

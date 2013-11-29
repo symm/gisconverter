@@ -3,7 +3,8 @@
 namespace Symm\Gisconverter\Interfaces;
 use Symm\Gisconverter\Geometry\Geometry;
 
-interface GeometryInterface {
+interface GeometryInterface
+{
     /*
      * @return string
      */
@@ -26,7 +27,7 @@ interface GeometryInterface {
     public function toGPX($mode = null);
 
     /*
-     * @param Geometry $geom
+     * @param  Geometry $geom
      * @return boolean
      */
     public function equals(Geometry $geom);

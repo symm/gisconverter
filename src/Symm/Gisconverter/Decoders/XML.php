@@ -6,8 +6,10 @@ use Symm\Gisconverter\Exceptions\UnavailableResource;
 use Symm\Gisconverter\Exceptions\InvalidText;
 use Symm\Gisconverter\Geometry\GeometryCollection;
 
-abstract class XML extends Decoder {
-    static public function geomFromText($text) {
+abstract class XML extends Decoder
+{
+    public static function geomFromText($text)
+    {
         if (!function_exists("simplexml_load_string") || !function_exists("libxml_use_internal_errors")) {
             throw new UnavailableResource("simpleXML");
         }
@@ -19,16 +21,17 @@ abstract class XML extends Decoder {
 
         try {
             $geom = static::_geomFromXML($xmlobj);
-        } catch(InvalidText $e) {
+        } catch (InvalidText $e) {
             throw new InvalidText(__CLASS__, $text);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
 
         return $geom;
     }
 
-    static protected function childElements($xml, $nodename = "") {
+    protected static function childElements($xml, $nodename = "")
+    {
         $nodename = strtolower($nodename);
         $res = array();
         foreach ($xml->children() as $child) {
@@ -40,28 +43,32 @@ abstract class XML extends Decoder {
                 array_push($res, $child);
             }
         }
+
         return $res;
     }
 
-    static protected function _childsCollect($xml) {
+    protected static function _childsCollect($xml)
+    {
         $components = array();
         foreach (static::childElements($xml) as $child) {
             try {
                 $geom = static::_geomFromXML($child);
                 $components[] = $geom;
-            } catch(InvalidText $e) {
+            } catch (InvalidText $e) {
             }
         }
 
         $ncomp = count($components);
         if ($ncomp == 0) {
             throw new InvalidText(__CLASS__);
-        } else if ($ncomp == 1) {
+        } elseif ($ncomp == 1) {
             return $components[0];
         } else {
             return new GeometryCollection($components);
         }
     }
 
-    protected static function _geomFromXML($xml) {}
+    protected static function _geomFromXML($xml) {
+
+    }
 }

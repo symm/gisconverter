@@ -2,7 +2,7 @@
 
 namespace Symm\Gisconverter\Exceptions;
 
-class OutOfRangeLat extends outOfRangeCoord {
+class OutOfRangeLat extends outOfRangeCoord
+{
     public $type = "latitude";
 }
-

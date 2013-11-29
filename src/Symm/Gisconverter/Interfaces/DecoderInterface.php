@@ -2,10 +2,11 @@
 
 namespace Symm\Gisconverter\Interfaces;
 
-interface DecoderInterface {
+interface DecoderInterface
+{
     /*
-     * @param string $text
+     * @param  string   $text
      * @return Geometry
      */
-    static public function geomFromText($text);
+    public static function geomFromText($text);
 }
