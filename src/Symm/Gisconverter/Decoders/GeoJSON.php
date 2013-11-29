@@ -8,32 +8,34 @@ use Symm\Gisconverter\Geometry\Point;
 use Symm\Gisconverter\Geometry\LinearRing;
 use Symm\Gisconverter\Geometry\Polygon;
 
-class GeoJSON extends Decoder {
-
-    static public function geomFromText($text) {
+class GeoJSON extends Decoder
+{
+    public static function geomFromText($text)
+    {
         $ltext = strtolower($text);
         $obj = json_decode($ltext);
-        if (is_null ($obj)) {
+        if (is_null($obj)) {
             throw new InvalidText(__CLASS__, $text);
         }
 
         try {
             $geom = static::_geomFromJson($obj);
-        } catch(InvalidText $e) {
+        } catch (InvalidText $e) {
             throw new InvalidText(__CLASS__, $text);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
 
         return $geom;
     }
 
-    static protected function _geomFromJson($json) {
-        if (property_exists ($json, "geometry") and is_object($json->geometry)) {
+    protected static function _geomFromJson($json)
+    {
+        if (property_exists($json, "geometry") and is_object($json->geometry)) {
             return static::_geomFromJson($json->geometry);
         }
 
-        if (!property_exists ($json, "type") or !is_string($json->type)) {
+        if (!property_exists($json, "type") or !is_string($json->type)) {
             throw new InvalidText(__CLASS__);
         }
 
@@ -51,39 +53,46 @@ class GeoJSON extends Decoder {
 
         try {
             $components = call_user_func(array('static', 'parse'.$type), $json);
-        } catch(InvalidText $e) {
+        } catch (InvalidText $e) {
             throw new InvalidText(__CLASS__);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
 
         $constructor = 'Symm\\Gisconverter\\Geometry\\' . $type;
+
         return new $constructor($components);
     }
 
-    static protected function parsePoint($json) {
-        if (!property_exists ($json, "coordinates") or !is_array($json->coordinates)) {
+    protected static function parsePoint($json)
+    {
+        if (!property_exists($json, "coordinates") or !is_array($json->coordinates)) {
             throw new InvalidText(__CLASS__);
         }
+
         return $json->coordinates;
     }
 
-    static protected function parseMultiPoint($json) {
-        if (!property_exists ($json, "coordinates") or !is_array($json->coordinates)) {
+    protected static function parseMultiPoint($json)
+    {
+        if (!property_exists($json, "coordinates") or !is_array($json->coordinates)) {
             throw new InvalidText(__CLASS__);
         }
-        return array_map(function($coords) {
+
+        return array_map(function ($coords) {
             return new Point($coords);
         }, $json->coordinates);
     }
 
-    static protected function parseLineString($json) {
+    protected static function parseLineString($json)
+    {
         return static::parseMultiPoint($json);
     }
 
-    static protected function parseMultiLineString($json) {
+    protected static function parseMultiLineString($json)
+    {
         $components = array();
-        if (!property_exists ($json, "coordinates") or !is_array($json->coordinates)) {
+        if (!property_exists($json, "coordinates") or !is_array($json->coordinates)) {
             throw new InvalidText(__CLASS__);
         }
         foreach ($json->coordinates as $coordinates) {
@@ -93,16 +102,19 @@ class GeoJSON extends Decoder {
             }
             $components[] = new LineString($linecomp);
         }
+
         return $components;
     }
 
-    static protected function parseLinearRing($json) {
+    protected static function parseLinearRing($json)
+    {
         return static::parseMultiPoint($json);
     }
 
-    static protected function parsePolygon($json) {
+    protected static function parsePolygon($json)
+    {
         $components = array();
-        if (!property_exists ($json, "coordinates") or !is_array($json->coordinates)) {
+        if (!property_exists($json, "coordinates") or !is_array($json->coordinates)) {
             throw new InvalidText(__CLASS__);
         }
         foreach ($json->coordinates as $coordinates) {
@@ -112,12 +124,14 @@ class GeoJSON extends Decoder {
             }
             $components[] = new LinearRing($ringcomp);
         }
+
         return $components;
     }
 
-    static protected function parseMultiPolygon($json) {
+    protected static function parseMultiPolygon($json)
+    {
         $components = array();
-        if (!property_exists ($json, "coordinates") or !is_array($json->coordinates)) {
+        if (!property_exists($json, "coordinates") or !is_array($json->coordinates)) {
             throw new InvalidText(__CLASS__);
         }
         foreach ($json->coordinates as $coordinates) {
@@ -131,11 +145,13 @@ class GeoJSON extends Decoder {
             }
             $components[] = new Polygon($polycomp);
         }
+
         return $components;
     }
 
-    static protected function parseGeometryCollection($json) {
-        if (!property_exists ($json, "geometries") or !is_array($json->geometries)) {
+    protected static function parseGeometryCollection($json)
+    {
+        if (!property_exists($json, "geometries") or !is_array($json->geometries)) {
             throw new InvalidText(__CLASS__);
         }
         $components = array();

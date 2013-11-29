@@ -4,8 +4,10 @@ namespace Symm\Gisconverter\Decoders;
 use Symm\Gisconverter\Geometry\Point;
 use Symm\Gisconverter\Exceptions\InvalidText;
 
-class WKT extends Decoder {
-    static public function geomFromText($text) {
+class WKT extends Decoder
+{
+    public static function geomFromText($text)
+    {
         $ltext = strtolower($text);
         $type_pattern = '/\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/';
         if (!preg_match($type_pattern, $ltext, $matches)) {
@@ -25,61 +27,74 @@ class WKT extends Decoder {
 
         try {
             $components = call_user_func(array('static', 'parse' . $type), $matches[2]);
-        } catch(InvalidText $e) {
+        } catch (InvalidText $e) {
             throw new InvalidText(__CLASS__, $text);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw $e;
         }
 
         $constructor = 'Symm\\Gisconverter\\Geometry\\' . $type;
+
         return new $constructor($components);
     }
 
-    static protected function parsePoint($str) {
+    protected static function parsePoint($str)
+    {
         return preg_split('/\s+/', trim($str));
     }
 
-    static protected function parseMultiPoint($str) {
+    protected static function parseMultiPoint($str)
+    {
         $str = trim($str);
-        if (strlen ($str) == 0) {
+        if (strlen($str) == 0) {
             return array();
         }
+
         return static::parseLineString($str);
     }
 
-    static protected function parseLineString($str) {
+    protected static function parseLineString($str)
+    {
         $components = array();
         foreach (preg_split('/,/', trim($str)) as $compstr) {
             $components[] = new Point(static::parsePoint($compstr));
         }
+
         return $components;
     }
 
-    static protected function parseMultiLineString($str) {
+    protected static function parseMultiLineString($str)
+    {
         return static::_parseCollection($str, "LineString");
     }
 
-    static protected function parseLinearRing($str) {
+    protected static function parseLinearRing($str)
+    {
         return static::parseLineString($str);
     }
 
-    static protected function parsePolygon($str) {
+    protected static function parsePolygon($str)
+    {
         return static::_parseCollection($str, "LinearRing");
     }
 
-    static protected function parseMultiPolygon($str) {
+    protected static function parseMultiPolygon($str)
+    {
         return static::_parseCollection($str, "Polygon");
     }
 
-    static protected function parseGeometryCollection($str) {
+    protected static function parseGeometryCollection($str)
+    {
         $components = array();
         foreach (preg_split('/,\s*(?=[A-Za-z])/', trim($str)) as $compstr) {
             $components[] = static::geomFromText($compstr);
         }
+
         return $components;
     }
 
-    static protected function _parseCollection($str, $child_constructor) {
+    protected static function _parseCollection($str, $child_constructor)
+    {
         $components = array();
         foreach (preg_split('/\)\s*,\s*\(/', trim($str)) as $compstr) {
             if (strlen($compstr) and $compstr[0] == '(') {
@@ -93,6 +108,7 @@ class WKT extends Decoder {
             $constructor = 'Symm\\Gisconverter\\Geometry\\' . $child_constructor;
             $components[] = new $constructor($childs);
         }
+
         return $components;
     }
 

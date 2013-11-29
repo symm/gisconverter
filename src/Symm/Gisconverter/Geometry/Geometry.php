@@ -2,32 +2,40 @@
 
 namespace Symm\Gisconverter\Geometry;
 
+use Symm\Gisconverter\Exceptions\UnimplementedMethod;
 use Symm\Gisconverter\Interfaces\GeometryInterface;
 
-abstract class Geometry implements GeometryInterface {
+abstract class Geometry implements GeometryInterface
+{
     const name = "";
 
-    public function toGeoJSON() {
+    public function toGeoJSON()
+    {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 
-    public function toKML() {
+    public function toKML()
+    {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 
-    public function toGPX($mode = null) {
+    public function toGPX($mode = null)
+    {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 
-    public function toWKT() {
+    public function toWKT()
+    {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 
-    public function equals(Geometry $geom) {
+    public function equals(Geometry $geom)
+    {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toWKT();
     }
 }

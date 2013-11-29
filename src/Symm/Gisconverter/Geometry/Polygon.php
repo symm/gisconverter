@@ -4,9 +4,11 @@ namespace Symm\Gisconverter\Geometry;
 
 use Symm\Gisconverter\Exceptions\InvalidFeature;
 
-class Polygon extends Collection {
+class Polygon extends Collection
+{
     const name = "Polygon";
-    public function __construct($components) {
+    public function __construct($components)
+    {
         $outer = $components[0];
         foreach (array_slice($components, 1) as $inner) {
             if (!$outer->contains($inner)) {
@@ -21,11 +23,13 @@ class Polygon extends Collection {
         $this->components = $components;
     }
 
-    public function toKML() {
+    public function toKML()
+    {
         $str = '<outerBoundaryIs>' . $this->components[0]->toKML() . '</outerBoundaryIs>';
-        $str .= implode("", array_map(function($comp) {
+        $str .= implode("", array_map(function ($comp) {
             return '<innerBoundaryIs>' . $comp->toKML() . '</innerBoundaryIs>';
         }, array_slice($this->components, 1)));
+
         return '<' . static::name . '>' . $str . '</' . static::name . '>';
     }
 

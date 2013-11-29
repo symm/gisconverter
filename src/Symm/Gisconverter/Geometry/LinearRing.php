@@ -5,9 +5,11 @@ namespace Symm\Gisconverter\Geometry;
 use Symm\Gisconverter\Exceptions\InvalidFeature;
 use Symm\Gisconverter\Exceptions\Unimplemented;
 
-class LinearRing extends LineString {
+class LinearRing extends LineString
+{
     const name = "LinearRing";
-    public function __construct($components) {
+    public function __construct($components)
+    {
         $first = $components[0];
         $last = end($components);
         if (!$first->equals($last)) {
@@ -15,22 +17,25 @@ class LinearRing extends LineString {
         }
         parent::__construct($components);
     }
-    public function contains(Geometry $geom) {
+    public function contains(Geometry $geom)
+    {
         if ($geom instanceof Collection) {
             foreach ($geom->components as $point) {
                 if (!$this->contains($point)) {
                     return false;
                 }
             }
+
             return true;
-        } else if ($geom instanceof Point) {
+        } elseif ($geom instanceof Point) {
             return $this->containsPoint($geom);
         } else {
             throw new Unimplemented(get_class($this) . "::" . __FUNCTION__ . " for " . get_class($geom) . " geometry");
         }
     }
 
-    protected function containsPoint(Point $point) {
+    protected function containsPoint(Point $point)
+    {
         /*
          *PHP implementation of OpenLayers.Geometry.LinearRing.ContainsPoint algorithm
          */
@@ -46,11 +51,11 @@ class LinearRing extends LineString {
             $x2 = round($end->lon, 14);
             $y2 = round($end->lat, 14);
 
-            if($y1 == $y2) {
+            if ($y1 == $y2) {
                 // horizontal edge
-                if($py == $y1) {
+                if ($py == $y1) {
                     // point on horizontal line
-                    if($x1 <= $x2 && ($px >= $x1 && $px <= $x2) || // right or vert
+                    if ($x1 <= $x2 && ($px >= $x1 && $px <= $x2) || // right or vert
                         $x1 >= $x2 && ($px <= $x1 && $px >= $x2)) { // left or vert
                         // point on edge
                         $crosses = -1;
@@ -63,24 +68,24 @@ class LinearRing extends LineString {
 
             $cx = round(((($x1 - $x2) * $py) + (($x2 * $y1) - ($x1 * $y2))) / ($y1 - $y2), 14);
 
-            if($cx == $px) {
+            if ($cx == $px) {
                 // point on line
-                if($y1 < $y2 && ($py >= $y1 && $py <= $y2) || // upward
+                if ($y1 < $y2 && ($py >= $y1 && $py <= $y2) || // upward
                     $y1 > $y2 && ($py <= $y1 && $py >= $y2)) { // downward
                     // point on edge
                     $crosses = -1;
                     break;
                 }
             }
-            if($cx <= $px) {
+            if ($cx <= $px) {
                 // no crossing to the right
                 continue;
             }
-            if($x1 != $x2 && ($cx < min($x1, $x2) || $cx > max($x1, $x2))) {
+            if ($x1 != $x2 && ($cx < min($x1, $x2) || $cx > max($x1, $x2))) {
                 // no crossing
                 continue;
             }
-            if($y1 < $y2 && ($py >= $y1 && $py < $y2) || // upward
+            if ($y1 < $y2 && ($py >= $y1 && $py < $y2) || // upward
                 $y1 > $y2 && ($py < $y1 && $py >= $y2)) { // downward
                 $crosses++;
             }
