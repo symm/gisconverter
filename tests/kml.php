@@ -5,7 +5,7 @@ class KML extends PHPUnit_Framework_TestCase {
 
     public function setup() {
         if (!$this->decoder) {
-            $this->decoder = new gisconverter\KML();
+            $this->decoder = new Symm\Gisconverter\Decoders\KML();
         }
     }
 

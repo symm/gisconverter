@@ -5,7 +5,7 @@ class GPX extends PHPUnit_Framework_TestCase {
 
     public function setup() {
         if (!$this->decoder) {
-            $this->decoder = new gisconverter\GPX();
+            $this->decoder = new Symm\Gisconverter\Decoders\GPX();
         }
     }
 

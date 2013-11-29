@@ -5,7 +5,7 @@ class WKT extends PHPUnit_Framework_TestCase {
 
     public function setup() {
         if (!$this->decoder) {
-            $this->decoder = new gisconverter\WKT();
+            $this->decoder = new Symm\Gisconverter\Decoders\WKT();
         }
     }
 
