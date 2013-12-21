@@ -1,11 +1,13 @@
-<phpunit bootstrap="./bootstrap.php"
+<phpunit bootstrap="./tests/bootstrap.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         stopOnFailure="true"
 >
     <testsuite name="gisconverter">
         <directory suffix=".php">./tests</directory>
     </testsuite>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+    </logging>
 </phpunit>
