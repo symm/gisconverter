@@ -13,7 +13,7 @@ class WKT extends Decoder
         if (!preg_match($type_pattern, $ltext, $matches)) {
             throw new InvalidText(__CLASS__, $text);
         }
-        foreach (array("Point", "MultiPoint", "LineString", "MultiLinestring", "LinearRing",
+        foreach (array("Point", "MultiPoint", "LineString", "MultiLineString", "LinearRing",
                      "Polygon", "MultiPolygon", "GeometryCollection") as $wkt_type) {
             if (strtolower($wkt_type) == $matches[1]) {
                 $type = $wkt_type;

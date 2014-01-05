@@ -39,7 +39,7 @@ class GeoJSON extends Decoder
             throw new InvalidText(__CLASS__);
         }
 
-        foreach (array("Point", "MultiPoint", "LineString", "MultiLinestring", "LinearRing",
+        foreach (array("Point", "MultiPoint", "LineString", "MultiLineString", "LinearRing",
                      "Polygon", "MultiPolygon", "GeometryCollection") as $json_type) {
             if (strtolower($json_type) == $json->type) {
                 $type = $json_type;
