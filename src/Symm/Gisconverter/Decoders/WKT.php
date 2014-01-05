@@ -33,7 +33,7 @@ class WKT extends Decoder
             throw $e;
         }
 
-        $constructor = 'Symm\\Gisconverter\\Geometry\\' . $type;
+        $constructor = '\\Symm\\Gisconverter\\Geometry\\' . $type;
 
         return new $constructor($components);
     }
