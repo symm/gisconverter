@@ -118,13 +118,10 @@ class KML extends XML
                     switch ($possibletype) {
                         case "Point":
                             return new MultiPoint($components);
-                            break;
                         case "LineString":
                             return new MultiLineString($components);
-                            break;
                         case "Polygon":
                             return new MultiPolygon($components);
-                            break;
                         default:
                             break;
                     }
