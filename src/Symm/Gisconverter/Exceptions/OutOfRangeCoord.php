@@ -10,8 +10,8 @@ namespace Symm\Gisconverter\Exceptions;
 
 abstract class OutOfRangeCoord extends CustomException
 {
-    private $coord;
     public $type;
+    private $coord;
 
     public function __construct($coord)
     {

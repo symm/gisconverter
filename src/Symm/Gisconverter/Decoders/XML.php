@@ -13,14 +13,16 @@ abstract class XML extends Decoder
         if (!function_exists("simplexml_load_string") || !function_exists("libxml_use_internal_errors")) {
             throw new UnavailableResource("simpleXML");
         }
+
         libxml_use_internal_errors(true);
+
         $xmlobj = simplexml_load_string($text);
         if ($xmlobj === false) {
             throw new InvalidText(__CLASS__, $text);
         }
 
         try {
-            $geom = static::_geomFromXML($xmlobj);
+            $geom = static::geomFromXML($xmlobj);
         } catch (InvalidText $e) {
             throw new InvalidText(__CLASS__, $text);
         } catch (\Exception $e) {
@@ -34,6 +36,7 @@ abstract class XML extends Decoder
     {
         $nodename = strtolower($nodename);
         $res = array();
+
         foreach ($xml->children() as $child) {
             if ($nodename) {
                 if (strtolower($child->getName()) == $nodename) {
@@ -47,14 +50,16 @@ abstract class XML extends Decoder
         return $res;
     }
 
-    protected static function _childsCollect($xml)
+    protected static function childsCollect($xml)
     {
         $components = array();
+
         foreach (static::childElements($xml) as $child) {
             try {
-                $geom = static::_geomFromXML($child);
+                $geom = static::geomFromXML($child);
                 $components[] = $geom;
             } catch (InvalidText $e) {
+
             }
         }
 
@@ -68,7 +73,8 @@ abstract class XML extends Decoder
         }
     }
 
-    protected static function _geomFromXML($xml)
+    protected static function geomFromXML($xml)
     {
+
     }
 }

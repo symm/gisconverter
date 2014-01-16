@@ -14,6 +14,7 @@ class MultiPoint extends Collection
                 throw new InvalidFeature(__CLASS__, static::name . " can only contain Point elements");
             }
         }
+
         $this->components = $components;
     }
 
@@ -22,9 +23,11 @@ class MultiPoint extends Collection
         if (get_class($geom) != get_class($this)) {
             return false;
         }
+
         if (count($this->components) != count($geom->components)) {
             return false;
         }
+
         foreach (range(0, count($this->components) - 1) as $count) {
             if (!$this->components[$count]->equals($geom->components[$count])) {
                 return false;

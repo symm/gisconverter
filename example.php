@@ -16,17 +16,17 @@ print PHP_EOL . PHP_EOL;
 
 #ok, you get the idea. Now, let's use helper functions
 
-print Gisconverter::geojson_to_kml('{"type":"LinearRing","coordinates":[[3.5,5.6],[4.8,10.5],[10,10],[3.5,5.6]]}');
+print Gisconverter::geojsonToKml('{"type":"LinearRing","coordinates":[[3.5,5.6],[4.8,10.5],[10,10],[3.5,5.6]]}');
 print PHP_EOL . PHP_EOL;
 
-print Gisconverter::geojson_to_wkt('{"type":"LinearRing","coordinates":[[3.5,5.6],[4.8,10.5],[10,10],[3.5,5.6]]}');
+print Gisconverter::geojsonToWkt('{"type":"LinearRing","coordinates":[[3.5,5.6],[4.8,10.5],[10,10],[3.5,5.6]]}');
 print PHP_EOL . PHP_EOL;
 
-print Gisconverter::kml_to_wkt('<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
+print Gisconverter::kmlToWkt('<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
 print PHP_EOL . PHP_EOL;
 
-print Gisconverter::kml_to_geojson('<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
+print Gisconverter::kmlToGeojson('<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
 print PHP_EOL . PHP_EOL;
 
-print Gisconverter::kml_to_gpx('<LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString>');
+print Gisconverter::kmlToGpx('<LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString>');
 print PHP_EOL . PHP_EOL;

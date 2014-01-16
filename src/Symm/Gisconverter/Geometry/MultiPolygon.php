@@ -19,6 +19,7 @@ class MultiPolygon extends Collection
                 throw new InvalidFeature(__CLASS__, "MultiPolygon can only contain Polygon elements");
             }
         }
+
         $this->components = $components;
     }
 }

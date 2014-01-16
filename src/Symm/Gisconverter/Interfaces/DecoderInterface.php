@@ -4,7 +4,7 @@ namespace Symm\Gisconverter\Interfaces;
 
 interface DecoderInterface
 {
-    /*
+    /**
      * @param  string   $text
      * @return Geometry
      */

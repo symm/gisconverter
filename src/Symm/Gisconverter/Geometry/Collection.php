@@ -31,12 +31,14 @@ abstract class Collection extends Geometry
     public function toGeoJSON()
     {
         $recurviseJSON = function ($geom) use (&$recurviseJSON) {
+
             if ($geom instanceof Point) {
                 return array($geom->lon, $geom->lat);
             } else {
                 return array_map($recurviseJSON, $geom->components);
             }
         };
+
         $value = (object) array('type' => static::name, 'coordinates' => call_user_func($recurviseJSON, $this));
 
         return json_encode($value);
@@ -44,7 +46,16 @@ abstract class Collection extends Geometry
 
     public function toKML()
     {
-        return '<MultiGeometry>' . implode("", array_map(function ($comp) { return $comp->toKML(); }, $this->components)) . '</MultiGeometry>';
+        return '<MultiGeometry>' .
+        implode(
+            "",
+            array_map(
+                function ($comp) {
+                    return $comp->toKML();
+                },
+                $this->components
+            )
+        )
+        . '</MultiGeometry>';
     }
-
 }

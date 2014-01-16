@@ -13,7 +13,7 @@ class MultiLineString extends Collection
                 throw new InvalidFeature(__CLASS__, "MultiLineString can only contain LineString elements");
             }
         }
+
         $this->components = $components;
     }
-
 }

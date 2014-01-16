@@ -7,11 +7,12 @@ use Symm\Gisconverter\Geometry\Point;
 
 class GPX extends XML
 {
-    protected static function _extractCoordinates($xml)
+    protected static function extractCoordinates($xml)
     {
         $attributes = $xml->attributes();
         $lon = (string) $attributes['lon'];
         $lat = (string) $attributes['lat'];
+
         if (!$lon or !$lat) {
             throw new InvalidText(__CLASS__);
         }
@@ -22,9 +23,10 @@ class GPX extends XML
     protected static function parseTrkseg($xml)
     {
         $res = array();
+
         foreach ($xml->children() as $elem) {
             if (strtolower($elem->getName()) == "trkpt") {
-                $res[] = new Point(static::_extractCoordinates($elem));
+                $res[] = new Point(static::extractCoordinates($elem));
             }
         }
 
@@ -34,9 +36,10 @@ class GPX extends XML
     protected static function parseRte($xml)
     {
         $res = array();
+
         foreach ($xml->children() as $elem) {
             if (strtolower($elem->getName()) == "rtept") {
-                $res[] = new Point(static::_extractCoordinates($elem));
+                $res[] = new Point(static::extractCoordinates($elem));
             }
         }
 
@@ -45,15 +48,17 @@ class GPX extends XML
 
     protected static function parseWpt($xml)
     {
-        return static::_extractCoordinates($xml);
+        return static::extractCoordinates($xml);
     }
 
-    protected static function _geomFromXML($xml)
+    protected static function geomFromXML($xml)
     {
         $nodename = strtolower($xml->getName());
+
         if ($nodename == "gpx" or $nodename == "trk") {
-            return static::_childsCollect($xml);
+            return static::childsCollect($xml);
         }
+
         foreach (array("Trkseg", "Rte", "Wpt") as $kml_type) {
             if (strtolower($kml_type) == $xml->getName()) {
                 $type = $kml_type;

@@ -18,18 +18,31 @@ class GeometryCollection extends Collection
 
     public function toWKT()
     {
-        return strtoupper(static::name) . "(" . implode(',', array_map(function ($comp) {
-            return $comp->toWKT();
-        }, $this->components)) . ')';
+        return strtoupper(static::name) .
+        "(" .
+        implode(
+            ',',
+            array_map(
+                function ($comp) {
+                    return $comp->toWKT();
+                },
+                $this->components
+            )
+        ) .
+        ')';
     }
 
     public function toGeoJSON()
     {
-        $value = (object) array ('type' => static::name, 'geometries' =>
-            array_map(function ($comp) {
-                // XXX: quite ugly
-                return json_decode($comp->toGeoJSON());
-            }, $this->components)
+        $value = (object) array (
+            'type' => static::name,
+            'geometries' => array_map(
+                function ($comp) {
+                    // XXX: quite ugly
+                    return json_decode($comp->toGeoJSON());
+                },
+                $this->components
+            )
         );
 
         return json_encode($value);

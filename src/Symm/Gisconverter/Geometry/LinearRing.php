@@ -8,13 +8,16 @@ use Symm\Gisconverter\Exceptions\Unimplemented;
 class LinearRing extends LineString
 {
     const name = "LinearRing";
+
     public function __construct($components)
     {
         $first = $components[0];
         $last = end($components);
+
         if (!$first->equals($last)) {
             throw new InvalidFeature(__CLASS__, "LinearRing must be closed");
         }
+
         parent::__construct($components);
     }
     public function contains(Geometry $geom)
@@ -98,5 +101,4 @@ class LinearRing extends LineString
 
         return $contained;
     }
-
 }

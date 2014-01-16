@@ -19,14 +19,18 @@ class Point extends Geometry
         if (count($coords) < 2) {
             throw new InvalidFeature(__CLASS__, "Point must have two coordinates");
         }
+
         $lon = $coords[0];
         $lat = $coords[1];
+
         if (!$this->checkLon($lon)) {
             throw new OutOfRangeLon($lon);
         }
+
         if (!$this->checkLat($lat)) {
             throw new OutOfRangeLat($lat);
         }
+
         $this->lon = (float) $lon;
         $this->lat = (float) $lat;
     }
@@ -57,6 +61,7 @@ class Point extends Geometry
         if (!$mode) {
             $mode = "wpt";
         }
+
         if ($mode != "wpt") {
             throw new UnimplementedMethod(__FUNCTION__, get_called_class());
         }
@@ -85,6 +90,7 @@ class Point extends Geometry
         if (!is_numeric($lon)) {
             return false;
         }
+
         if ($lon < -180 || $lon > 180) {
             return false;
         }
@@ -96,6 +102,7 @@ class Point extends Geometry
         if (!is_numeric($lat)) {
             return false;
         }
+
         if ($lat < -90 || $lat > 90) {
             return false;
         }

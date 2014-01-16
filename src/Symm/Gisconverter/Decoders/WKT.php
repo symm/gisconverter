@@ -10,9 +10,11 @@ class WKT extends Decoder
     {
         $ltext = strtolower($text);
         $type_pattern = '/\s*(\w+)\s*\(\s*(.*)\s*\)\s*$/';
+
         if (!preg_match($type_pattern, $ltext, $matches)) {
             throw new InvalidText(__CLASS__, $text);
         }
+
         foreach (array("Point", "MultiPoint", "LineString", "MultiLineString", "LinearRing",
                      "Polygon", "MultiPolygon", "GeometryCollection") as $wkt_type) {
             if (strtolower($wkt_type) == $matches[1]) {
@@ -46,6 +48,7 @@ class WKT extends Decoder
     protected static function parseMultiPoint($str)
     {
         $str = trim($str);
+
         if (strlen($str) == 0) {
             return array();
         }
@@ -56,6 +59,7 @@ class WKT extends Decoder
     protected static function parseLineString($str)
     {
         $components = array();
+
         foreach (preg_split('/,/', trim($str)) as $compstr) {
             $components[] = new Point(static::parsePoint($compstr));
         }
@@ -65,7 +69,7 @@ class WKT extends Decoder
 
     protected static function parseMultiLineString($str)
     {
-        return static::_parseCollection($str, "LineString");
+        return static::parseCollection($str, "LineString");
     }
 
     protected static function parseLinearRing($str)
@@ -75,17 +79,18 @@ class WKT extends Decoder
 
     protected static function parsePolygon($str)
     {
-        return static::_parseCollection($str, "LinearRing");
+        return static::parseCollection($str, "LinearRing");
     }
 
     protected static function parseMultiPolygon($str)
     {
-        return static::_parseCollection($str, "Polygon");
+        return static::parseCollection($str, "Polygon");
     }
 
     protected static function parseGeometryCollection($str)
     {
         $components = array();
+
         foreach (preg_split('/,\s*(?=[A-Za-z])/', trim($str)) as $compstr) {
             $components[] = static::geomFromText($compstr);
         }
@@ -93,13 +98,16 @@ class WKT extends Decoder
         return $components;
     }
 
-    protected static function _parseCollection($str, $child_constructor)
+    protected static function parseCollection($str, $child_constructor)
     {
         $components = array();
+
         foreach (preg_split('/\)\s*,\s*\(/', trim($str)) as $compstr) {
+
             if (strlen($compstr) and $compstr[0] == '(') {
                 $compstr = substr($compstr, 1);
             }
+
             if (strlen($compstr) and $compstr[strlen($compstr)-1] == ')') {
                 $compstr = substr($compstr, 0, -1);
             }
@@ -111,5 +119,4 @@ class WKT extends Decoder
 
         return $components;
     }
-
 }
