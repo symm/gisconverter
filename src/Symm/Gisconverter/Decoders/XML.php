@@ -68,7 +68,7 @@ abstract class XML extends Decoder
         }
     }
 
-    protected static function _geomFromXML($xml) {
-
+    protected static function _geomFromXML($xml)
+    {
     }
 }

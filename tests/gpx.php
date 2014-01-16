@@ -1,9 +1,11 @@
 <?php
 
-class GPX extends PHPUnit_Framework_TestCase {
+class gpx extends PHPUnit_Framework_TestCase
+{
     private $decoder = null;
 
-    public function setup() {
+    public function setup()
+    {
         if (!$this->decoder) {
             $this->decoder = new Symm\Gisconverter\Decoders\GPX();
         }
@@ -12,11 +14,13 @@ class GPX extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
-    public function testInvalidText1 () {
+    public function testInvalidText1()
+    {
         $this->decoder->geomFromText('<Crap></Crap>');
     }
 
-    public function testTracks() {
+    public function testTracks()
+    {
         $geom = $this->decoder->geomFromText('<trkseg><trkpt lon="5.6" lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg>');
         $this->assertEquals($geom->toGPX('trkseg'), '<trkseg><trkpt lon="5.6" lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg>');
 
@@ -27,21 +31,25 @@ class GPX extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Symm\Gisconverter\Exceptions\InvalidText
      */
-    public function testInvalidTracks () {
+    public function testInvalidTracks()
+    {
         $this->decoder->geomFromText('<trkseg><trkpt lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg>');
     }
 
-    public function testRoutes() {
+    public function testRoutes()
+    {
         $geom = $this->decoder->geomFromText('<rte><rtept lon="5.6" lat="3.5"></rtept><rtept lon="10.5" lat="4.8"></rtept><rtept lon="10" lat="10"></rtept></rte>');
         $this->assertEquals($geom->toGPX('rte'), '<rte><rtept lon="5.6" lat="3.5"></rtept><rtept lon="10.5" lat="4.8"></rtept><rtept lon="10" lat="10"></rtept></rte>');
     }
 
-    public function testWaypoints() {
+    public function testWaypoints()
+    {
         $geom = $this->decoder->geomFromText('<wpt lon="10" lat="10"></wpt>');
         $this->assertEquals($geom->toGPX('wpt'), '<wpt lon="10" lat="10"></wpt>');
     }
 
-    public function testFullDoc() {
+    public function testFullDoc()
+    {
         $geom = $this->decoder->geomFromText('<gpx version="1.0" xmlns="http://www.topografix.com/GPX/1/0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd"><trk><author>user</author><trkseg><trkpt lon="5.6" lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg></trk></gpx>');
         $this->assertEquals($geom->toGPX('trkseg'), '<trkseg><trkpt lon="5.6" lat="3.5"></trkpt><trkpt lon="10.5" lat="4.8"></trkpt><trkpt lon="10" lat="10"></trkpt></trkseg>');
     }
