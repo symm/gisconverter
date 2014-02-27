@@ -102,6 +102,6 @@ class Gisconverter
         $className = __NAMESPACE__ . '\\Decoders\\GPX';
         $decoder = new $className;
 
-        return $decoder->geomFromText($text)->toGPX();
+        return $decoder->geomFromText($text)->toKML();
     }
 }
