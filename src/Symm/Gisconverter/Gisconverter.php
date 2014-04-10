@@ -2,6 +2,8 @@
 
 namespace Symm\Gisconverter;
 
+use Symm\Gisconverter\Decoders\DecoderFactory;
+
 class Gisconverter
 {
     public function __construct()
@@ -9,99 +11,88 @@ class Gisconverter
 
     }
 
+    private static function getDecoder($type)
+    {
+        return DecoderFactory::getDecoder($type);
+    }
+
+    protected static function getWktDecoder()
+    {
+        return self::getDecoder(DecoderFactory::WKT);
+    }
+
+    protected static function getGeoJsonDecoder()
+    {
+        return self::getDecoder(DecoderFactory::GEOJSON);
+    }
+
+    protected static function getKmlDecoder()
+    {
+        return self::getDecoder(DecoderFactory::KML);
+    }
+
+    protected static function getGpxDecoder()
+    {
+        return self::getDecoder(DecoderFactory::GPX);
+    }
+
     public static function wktToGeojson($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\WKT';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGeoJSON();
+        return self::getWktDecoder()->geomFromText($text)->toGeoJSON();
     }
 
     public static function wktToKml($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\WKT';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toKML();
+        return self::getWktDecoder()->geomFromText($text)->toKML();
     }
 
     public static function wktToGpx($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\WKT';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGPX();
+        return self::getWktDecoder()->geomFromText($text)->toGPX();
     }
 
     public static function geojsonToWkt($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GeoJSON';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toWKT();
+        return self::getGeoJsonDecoder()->geomFromText($text)->toWKT();
     }
 
     public static function geojsonToKml($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GeoJSON';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toKML();
+        return self::getGeoJsonDecoder()->geomFromText($text)->toKML();
     }
 
     public static function geojsonToGpx($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GeoJSON';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGPX();
+        return self::getGeoJsonDecoder()->geomFromText($text)->toGPX();
     }
 
     public static function kmlToWkt($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\KML';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toWKT();
+        return self::getKmlDecoder()->geomFromText($text)->toWKT();
     }
 
     public static function kmlToGeojson($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\KML';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGeoJSON();
+        return self::getKmlDecoder()->toGeoJSON();
     }
 
     public static function kmlToGpx($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\KML';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGPX();
+        return self::getKmlDecoder()->geomFromText($text)->toGPX();
     }
 
     public static function gpxToWkt($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GPX';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toWKT();
+        return self::getGpxDecoder()->geomFromText($text)->toWKT();
     }
 
     public static function gpxToGeojson($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GPX';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toGeoJSON();
+        return self::getGpxDecoder()->geomFromText($text)->toGeoJSON();
     }
 
     public static function gpxToKml($text)
     {
-        $className = __NAMESPACE__ . '\\Decoders\\GPX';
-        $decoder = new $className;
-
-        return $decoder->geomFromText($text)->toKML();
+        return self::getGpxDecoder()->geomFromText($text)->toKML();
     }
 }
