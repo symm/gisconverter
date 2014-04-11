@@ -73,7 +73,7 @@ class Gisconverter
 
     public static function kmlToGeojson($text)
     {
-        return self::getKmlDecoder()->toGeoJSON();
+        return self::getKmlDecoder()->geomFromText($text)->toGeoJSON();
     }
 
     public static function kmlToGpx($text)
