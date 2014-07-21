@@ -11,7 +11,12 @@
     },
     "autoload": {
         "psr-0": {
-            "Symm": "src"
+            "Symm\\Gisconverter": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     }
 }
