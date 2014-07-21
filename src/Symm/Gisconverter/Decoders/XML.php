@@ -29,6 +29,33 @@ abstract class XML extends Decoder
             throw $e;
         }
 
+        $PlaceAttributes=array();
+
+        // Parses possible attributes using Children method
+        foreach ($xmlobj->children() as $attribute) {
+            $propvalue =$xmlobj->{$attribute->getName()};
+            if ( $propvalue->children()->count()===0 ) {
+                $PlaceAttributes[strval($attribute->getName())] = strval($propvalue->__toString());
+            }
+        }
+
+        // Parses possible attributes using ExtendedData
+        if ($xmlobj->ExtendedData) {
+            foreach ( $xmlobj->ExtendedData->children() as $Element ) {
+                foreach ( $Element->children() as $attribute ) {
+                    if($attribute->attributes()->name) $PlaceAttributes[strval($attribute->attributes()->name)] =strval($attribute->__toString());
+                }
+
+                if ( empty( $Element->displayName ) ) {
+                    if ( $Element->attributes()->name ) $PlaceAttributes[strval($Element->attributes()->name)] =strval($Element->value);
+                } else {
+                    $PlaceAttributes[strval($Element->displayName)] =strval($Element->value);
+                }
+            }
+        }
+
+        $geom->setAttributes($PlaceAttributes);
+
         return $geom;
     }
 
