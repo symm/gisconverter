@@ -164,4 +164,22 @@ class kml extends PHPUnit_Framework_TestCase
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
     }
 
+    public function testItParsesKmlCustomDataAttributes()
+    {
+        $decoder = $this->decoder;
+        $kmltext = file_get_contents(__DIR__ . '/files/kml-extended-data.kml');
+        $point   = $decoder->geomFromText($kmltext);
+
+        $attributes = $point->getAttributes();
+
+        $this->assertInstanceOf('Symm\Gisconverter\Geometry\Point', $point);
+        $this->assertInternalType('array', $attributes);
+
+        $this->assertEquals('ALLGOOD', $attributes['abernant']);
+        $this->assertEquals('Alabama', $attributes['alabama']);
+        $this->assertEquals('0.889', $attributes['Geocode Score']);
+        $this->assertEquals('zip', $attributes['Geocode Precision']);
+
+        $this->assertEquals('POINT(-86.508321 33.92621)', $point->toWKT());
+    }
 }

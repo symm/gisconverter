@@ -1,0 +1,23 @@
+<Placemark>
+      <ExtendedData>
+          <Data name='abernant'>
+            <displayName><![CDATA[abernant]]></displayName>
+            <value><![CDATA[ALLGOOD]]></value>
+          </Data>
+          <Data name='alabama'>
+            <displayName><![CDATA[alabama]]></displayName>
+            <value><![CDATA[Alabama]]></value>
+          </Data>
+          <Data name='geoscore'>
+            <displayName><![CDATA[Geocode Score]]></displayName>
+            <value><![CDATA[0.889]]></value>
+          </Data>
+          <Data name='geoprecision'>
+            <displayName><![CDATA[Geocode Precision]]></displayName>
+            <value><![CDATA[zip]]></value>
+          </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>-86.508321,33.92621</coordinates>
+      </Point>
+</Placemark>

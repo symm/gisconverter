@@ -37,7 +37,7 @@ abstract class XML extends Decoder
             if ( $propvalue->children()->count()===0 ) {
                 $PlaceAttributes[strval($attribute->getName())] = strval($propvalue->__toString());
             }
-        } 
+        }
 
         // Parses possible attributes using ExtendedData
         if ($xmlobj->ExtendedData) {
@@ -53,6 +53,8 @@ abstract class XML extends Decoder
                 }
             }
         }
+
+        $geom->setAttributes($PlaceAttributes);
 
         return $geom;
     }

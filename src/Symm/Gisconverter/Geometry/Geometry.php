@@ -9,6 +9,18 @@ abstract class Geometry implements GeometryInterface
 {
     const name = "";
 
+    private $attributes;
+
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
+
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
     public function toGeoJSON()
     {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
