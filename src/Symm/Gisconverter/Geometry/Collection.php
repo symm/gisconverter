@@ -58,4 +58,49 @@ abstract class Collection extends Geometry
         )
         . '</MultiGeometry>';
     }
+
+    public function writeWKB()
+    {
+        $wkb = pack('L',$this->numGeometries());
+            foreach ($this->components as $component) {
+              $wkb .=  $component->toWKB();
+            }
+
+        return $wkb;
+    }
+
+    public function toWKB($write_as_hex = false)
+    {
+        $wkb = pack('c', 1);
+
+        switch($this->getGeomType()) {
+
+          case 'MultiPoint';
+            $wkb .= pack('L',4);
+            $wkb .= $this->writeWKB();
+            break;
+          case 'MultiLineString';
+            $wkb .= pack('L',5);
+            $wkb .= $this->writeWKB();
+            break;
+
+          case 'MultiPolygon';
+            $wkb .= pack('L',6);
+            $wkb .= $this->writeWKB();
+            break;
+
+          case 'GeometryCollection';
+            $wkb .= pack('L',7);
+            $wkb .= $this->writeWKB();
+            break;
+   
+        }
+
+        if ($write_as_hex) {
+            $unpacked = unpack('H*', $wkb);
+            return $unpacked[1];
+        } else {
+            return $wkb;
+        }
+    }
 }
