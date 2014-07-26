@@ -24,13 +24,6 @@ abstract class Geometry implements GeometryInterface
     public function getGeomType() {
         return static::name;
     }
-    public function getComponents() {
-        return $this->components;
-    }
-
-    public function numGeometries() {
-        return count($this->components);
-    }
 
     public function toGeoJSON()
     {

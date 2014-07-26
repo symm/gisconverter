@@ -15,6 +15,14 @@ abstract class Collection extends Geometry
         }
     }
 
+    public function getComponents() {
+        return $this->components;
+    }
+
+    public function numGeometries() {
+        return count($this->components);
+    }    
+
     public function toWKT()
     {
         $recursiveWKT = function ($geom) use (&$recursiveWKT) {
@@ -30,16 +38,16 @@ abstract class Collection extends Geometry
 
     public function toGeoJSON()
     {
-        $recurviseJSON = function ($geom) use (&$recurviseJSON) {
+        $recursiveJSON = function ($geom) use (&$recursiveJSON) {
 
             if ($geom instanceof Point) {
                 return array($geom->lon, $geom->lat);
             } else {
-                return array_map($recurviseJSON, $geom->components);
+                return array_map($recursiveJSON, $geom->components);
             }
         };
 
-        $value = (object) array('type' => static::name, 'coordinates' => call_user_func($recurviseJSON, $this));
+        $value = (object) array('type' => static::name, 'coordinates' => call_user_func($recursiveJSON, $this));
 
         return json_encode($value);
     }

@@ -33,8 +33,6 @@ class conversions extends PHPUnit_Framework_TestCase
         $this->assertEquals($geom->toKML(), '<MultiGeometry><Point><coordinates>3.5,5.6</coordinates></Point><Point><coordinates>4.8,10.5</coordinates></Point><Point><coordinates>10,10</coordinates></Point></MultiGeometry>');
         $this->assertEquals($geom->toWKB(true), '01040000000300000001010000000000000000000c406666666666661640010100000033333333333313400000000000002540010100000000000000000024400000000000002440');
 
-
-
         $geom = $this->default_decoder->geomFromText('MULTIPOINT()');
         $this->assertEquals($geom->toGeoJSON(), '{"type":"MultiPoint","coordinates":[]}');
         $this->assertEquals($geom->toKML(), '<MultiGeometry></MultiGeometry>');
@@ -58,7 +56,7 @@ class conversions extends PHPUnit_Framework_TestCase
         $this->assertEquals($geom->toGeoJSON(), '{"type":"MultiLineString","coordinates":[[[3.5,5.6],[4.8,10.5],[10,10]]]}');
         $this->assertEquals($geom->toKML(), '<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString></MultiGeometry>');
         $this->assertEquals($geom->toWKB(true), '0105000000010000000102000000030000000000000000000c4066666666666616403333333333331340000000000000254000000000000024400000000000002440');
-        
+
         $geom = $this->default_decoder->geomFromText('MULTILINESTRING((3.5 5.6,4.8 10.5,10 10),(10 10,10 20,20 20,20 15))');
         $this->assertEquals($geom->toGeoJSON(), '{"type":"MultiLineString","coordinates":[[[3.5,5.6],[4.8,10.5],[10,10]],[[10,10],[10,20],[20,20],[20,15]]]}');
         $this->assertEquals($geom->toKML(), '<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString><LineString><coordinates>10,10 10,20 20,20 20,15</coordinates></LineString></MultiGeometry>');
@@ -106,5 +104,4 @@ class conversions extends PHPUnit_Framework_TestCase
         $this->assertEquals($geom->toKML(), '<MultiGeometry><Point><coordinates>10,10</coordinates></Point><Point><coordinates>30,30</coordinates></Point><LineString><coordinates>15,15 20,20</coordinates></LineString></MultiGeometry>');
         $this->assertEquals($geom->toWKB(true), '01070000000300000001010000000000000000002440000000000000244001010000000000000000003e400000000000003e400102000000020000000000000000002e400000000000002e4000000000000034400000000000003440');
     }
-
 }

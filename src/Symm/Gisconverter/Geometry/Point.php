@@ -48,17 +48,19 @@ class Point extends Geometry
 
     /**
      * A point has no childs
-     * @return null 
+     * @return null
      */
-    public function getComponents() {
+    public function getComponents()
+    {
         return null;
     }
-    
+
     /**
      * A point has no childs
      * @return int solid zero
      */
-    public function numGeometries() {
+    public function numGeometries()
+    {
         return 0;
     }
 
@@ -113,6 +115,7 @@ class Point extends Geometry
 
         return true;
     }
+
     private function checkLat($lat)
     {
         if (!is_numeric($lat)) {
@@ -130,17 +133,18 @@ class Point extends Geometry
      * The WKB representation of a point is its coordinates packed as double precision
      * @return String concatenation of lon and lat packed as double precision
      */
-    public function writeWKB() {
-       
-        $wkb= pack('dd', $this->lon, $this->lat);
+    public function writeWKB()
+    {
+
+        $wkb = pack('dd', $this->lon, $this->lat);
         return $wkb;
     }
-
+    
     public function toWKB($write_as_hex = false)
     {
         $wkb = pack('c', 1);
-        $wkb .= pack('L',1);
-        $wkb .= $this->writeWKB();
+        $wkb.= pack('L', 1);
+        $wkb.= $this->writeWKB();
 
         if ($write_as_hex) {
             $unpacked = unpack('H*', $wkb);
@@ -149,6 +153,4 @@ class Point extends Geometry
             return $wkb;
         }
     }
-
-
 }
