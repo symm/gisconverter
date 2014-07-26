@@ -39,20 +39,18 @@ class WKB extends Decoder
       return $geometry;
     }
 
+
     public  function getGeometry(&$mem) {
       
       $first5bytes=fread($mem, 5);
-      
       if(empty($first5bytes)) {
         throw new InvalidText('Not enough input to determine base info');
       }
       
       $base_info = unpack("corder/ctype/cz/cm/cs", $first5bytes);  
 
-
-
       if ($base_info['order'] !== 1) {
-        throw new InvalidText('Only NDR (little endian) SKB format is supported at the moment');
+        throw new InvalidText('Only NDR (little endian) SKB format is supported at the moment. Order was '.$base_info['order']);
       }
 
       if ($base_info['type'] === 0 || $base_info['type'] > 7 ) {
@@ -80,7 +78,6 @@ class WKB extends Decoder
       $wkb_types=[null, 'Point','LineString','Polygon','MultiPoint','MultiLineString','MultiPolygon','GeometryCollection'];
 
       $type=$wkb_types[$base_info['type']];
-
 
       $components = call_user_func(array($this, 'parse' . $type),$mem);
 
