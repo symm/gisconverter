@@ -85,6 +85,9 @@ class wkt extends PHPUnit_Framework_TestCase
 
         $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)),((60 60,70 70,80 60,60 60)))');
         $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)),((60 60,70 70,80 60,60 60)))');
+
+        $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 18,18 18,18 17,12 12)),((60 60,70 70,80 60,60 60)))');
+        $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 18,18 18,18 17,12 12)),((60 60,70 70,80 60,60 60)))');
     }
 
     public function testGeometryCollection()
