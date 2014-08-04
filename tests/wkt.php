@@ -71,21 +71,30 @@ class wkt extends PHPUnit_Framework_TestCase
 
     public function testPolygon()
     {
+        //normal polygon
         $geom = $this->decoder->geomFromText('POLYGON((10 10,10 20,20 20,20 15,10 10))');
         $this->assertEquals($geom->toWKT(), 'POLYGON((10 10,10 20,20 20,20 15,10 10))');
 
+        //normal polygon with hole
         $geom = $this->decoder->geomFromText('POLYGON((0 0,10 0,10 10,0 10,0 0),(1 1,9 1,9 9,1 9,1 1))');
         $this->assertEquals($geom->toWKT(), 'POLYGON((0 0,10 0,10 10,0 10,0 0),(1 1,9 1,9 9,1 9,1 1))');
     }
 
     public function testMultiPolygon()
     {
+        //normal polygon
         $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)))');
         $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)))');
 
+        //multipart polygon
         $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)),((60 60,70 70,80 60,60 60)))');
         $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10)),((60 60,70 70,80 60,60 60)))');
 
+        //normal polygon with hole
+        $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 14,14 14,12 12)))');
+        $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 14,14 14,12 12)))');
+
+        //multipart polygon with hole
         $geom = $this->decoder->geomFromText('MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 18,18 18,18 17,12 12)),((60 60,70 70,80 60,60 60)))');
         $this->assertEquals($geom->toWKT(), 'MULTIPOLYGON(((10 10,10 20,20 20,20 15,10 10),(12 12,12 18,18 18,18 17,12 12)),((60 60,70 70,80 60,60 60)))');
     }
