@@ -124,6 +124,12 @@ class kml extends PHPUnit_Framework_TestCase
         $this->assertEquals($geom->toKML(), '<MultiGeometry><Point><coordinates>10,10</coordinates></Point><Point><coordinates>30,30</coordinates></Point><LineString><coordinates>15,15 20,20</coordinates></LineString></MultiGeometry>');
     }
 
+    public function testOldMarkupGeometryCollection()
+    {
+        $geom = $this->decoder->geomFromText('<GeometryCollection><Point><coordinates>-96.987409470201,26.795078729458</coordinates></Point><LineString><coordinates>-122.29667,37.81689 -122.29568,37.81778 -122.29498,37.81854 -122.2925,37.82164 -122.29159,37.82307 -122.29085,37.82461 -122.29073,37.82497 -122.29064,37.82556 -122.29067,37.826 -122.29075,37.82637 -122.29098,37.82692 -122.29147,37.82759 -122.29242,37.82844 -122.29285,37.82898</coordinates></LineString></GeometryCollection>');
+        $this->assertEquals($geom->toKML(), '<MultiGeometry><Point><coordinates>-96.987409470201,26.795078729458</coordinates></Point><LineString><coordinates>-122.29667,37.81689 -122.29568,37.81778 -122.29498,37.81854 -122.2925,37.82164 -122.29159,37.82307 -122.29085,37.82461 -122.29073,37.82497 -122.29064,37.82556 -122.29067,37.826 -122.29075,37.82637 -122.29098,37.82692 -122.29147,37.82759 -122.29242,37.82844 -122.29285,37.82898</coordinates></LineString></MultiGeometry>');
+    }
+
     /**
      * @expectedException gisconverter\Unimplemented
      */

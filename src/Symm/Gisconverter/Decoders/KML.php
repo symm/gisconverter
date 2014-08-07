@@ -72,6 +72,11 @@ class KML extends XML
         return $components;
     }
 
+    protected static function parseGeometryCollection($xml)
+    {
+        return static::parseMultiGeometry($xml);
+    }
+
     protected static function extractCoordinates($xml)
     {
         $coordinates = static::childElements($xml, 'coordinates');
@@ -91,9 +96,18 @@ class KML extends XML
             return static::childsCollect($xml);
         }
 
-        foreach (array("Point", "LineString", "LinearRing", "Polygon", "MultiGeometry") as $kml_type) {
-            if (strtolower($kml_type) == $nodename) {
-                $type = $kml_type;
+        $kmlTypes = array(
+                     "Point",
+                     "LineString",
+                     "LinearRing",
+                     "Polygon",
+                     "MultiGeometry",
+                     "GeometryCollection"
+        );
+
+        foreach ($kmlTypes as $kmlType) {
+            if (strtolower($kmlType) == $nodename) {
+                $type = $kmlType;
                 break;
             }
         }
@@ -110,7 +124,7 @@ class KML extends XML
             throw $e;
         }
 
-        if ($type == "MultiGeometry") {
+        if ($type == "MultiGeometry" || $type=="GeometryCollection") {
             if (count($components)) {
                 $possibletype = $components[0]::name;
                 $sametype = true;
