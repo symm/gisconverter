@@ -6,6 +6,11 @@ use Symm\Gisconverter\Geometry\Geometry;
 interface GeometryInterface
 {
     /**
+     * @return array
+     */
+    public function toGeoArray();
+
+    /**
      * @return string
      */
     public function toGeoJSON();

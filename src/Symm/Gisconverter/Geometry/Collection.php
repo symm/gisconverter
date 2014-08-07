@@ -36,7 +36,7 @@ abstract class Collection extends Geometry
         return strtoupper(static::name) . call_user_func($recursiveWKT, $this);
     }
 
-    public function toGeoJSON()
+    public function toGeoArray()
     {
         $recursiveJSON = function ($geom) use (&$recursiveJSON) {
 
@@ -48,8 +48,11 @@ abstract class Collection extends Geometry
         };
 
         $value = (object) array('type' => static::name, 'coordinates' => call_user_func($recursiveJSON, $this));
+    }
 
-        return json_encode($value);
+    public function toGeoJSON()
+    {
+        return json_encode((object) $this->toGeoArray());
     }
 
     public function toKML()

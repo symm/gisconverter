@@ -25,6 +25,7 @@ abstract class Geometry implements GeometryInterface
         return static::name;
     }
 
+
     public function toGeoJSON()
     {
         throw new UnimplementedMethod(__FUNCTION__, get_called_class());
