@@ -75,7 +75,7 @@ class KML extends XML
     protected static function parseGeometryCollection($xml)
     {
         return static::parseMultiGeometry($xml);
-    }    
+    }
 
     protected static function extractCoordinates($xml)
     {
@@ -96,9 +96,18 @@ class KML extends XML
             return static::childsCollect($xml);
         }
 
-        foreach (array("Point", "LineString", "LinearRing", "Polygon", "MultiGeometry","GeometryCollection") as $kml_type) {
-            if (strtolower($kml_type) == $nodename) {
-                $type = $kml_type;
+        $kmlTypes = array(
+                     "Point",
+                     "LineString",
+                     "LinearRing",
+                     "Polygon",
+                     "MultiGeometry",
+                     "GeometryCollection"
+        );
+
+        foreach ($kmlTypes as $kmlType) {
+            if (strtolower($kmlType) == $nodename) {
+                $type = $kmlType;
                 break;
             }
         }
