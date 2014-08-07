@@ -71,4 +71,28 @@ class LineString extends MultiPoint
             "</rte>";
         }
     }
+
+    public function writeWKB()
+    {
+        $wkb = pack('L', $this->numGeometries());
+        foreach ($this->components as $component) {
+            $wkb.= $component->writeWKB();
+        }
+        
+        return $wkb;
+    }
+
+    public function toWKB($write_as_hex = false)
+    {
+        $wkb = pack('c', 1);
+        $wkb.= pack('L', 2);
+        $wkb.= $this->writeWKB();
+        
+        if ($write_as_hex) {
+            $unpacked = unpack('H*', $wkb);
+            return $unpacked[1];
+        } else {
+            return $wkb;
+        }
+    }
 }

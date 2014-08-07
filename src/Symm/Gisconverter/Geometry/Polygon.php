@@ -7,6 +7,7 @@ use Symm\Gisconverter\Exceptions\InvalidFeature;
 class Polygon extends Collection
 {
     const name = "Polygon";
+
     public function __construct($components)
     {
         $outer = $components[0];
@@ -46,5 +47,29 @@ class Polygon extends Collection
             '<' . static::name . '>' .
                 $str .
             '</' . static::name . '>';
+    }
+
+    public function writeWKB()
+    {
+        $wkb = pack('L', $this->numGeometries());
+        foreach ($this->components as $component) {
+            $wkb.= $component->writeWKB();
+        }
+        
+        return $wkb;
+    }
+
+    public function toWKB($write_as_hex = false)
+    {
+        $wkb = pack('c', 1);
+        $wkb.= pack('L', 3);
+        $wkb.= $this->writeWKB();
+        
+        if ($write_as_hex) {
+            $unpacked = unpack('H*', $wkb);
+            return $unpacked[1];
+        } else {
+            return $wkb;
+        }
     }
 }

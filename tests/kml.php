@@ -31,13 +31,13 @@ class kml extends PHPUnit_Framework_TestCase
     {
         $geom = $this->decoder->geomFromText('<Point><coordinates>10,10</coordinates></Point>');
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
-
+        
         $geom = $this->decoder->geomFromText('  <Point>  <coordinates>10,  10 </coordinates></Point> ');
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
-
+        
         $geom = $this->decoder->geomFromText('<Point><coordinates>0,0</coordinates></Point>');
         $this->assertEquals($geom->toKML(), '<Point><coordinates>0,0</coordinates></Point>');
-
+        
         $geom = $this->decoder->geomFromText('<Point><coordinates>10,10</coordinates><crap>some stuff</crap></Point>');
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
     }
@@ -74,7 +74,7 @@ class kml extends PHPUnit_Framework_TestCase
     {
         $geom = $this->decoder->geomFromText('<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
         $this->assertEquals($geom->toKML(), '<Polygon><outerBoundaryIs><LinearRing><coordinates>10,10 10,20 20,20 20,15 10,10</coordinates></LinearRing></outerBoundaryIs></Polygon>');
-
+        
         $geom = $this->decoder->geomFromText('<Polygon><outerBoundaryIs><LinearRing><coordinates>0,0 10,0 10,10 0,10 0,0</coordinates></LinearRing></outerBoundaryIs><innerBoundaryIs><LinearRing><coordinates>1,1 9,1 9,9 1,9 1,1</coordinates></LinearRing></innerBoundaryIs></Polygon>');
         $this->assertEquals($geom->toKML(), '<Polygon><outerBoundaryIs><LinearRing><coordinates>0,0 10,0 10,10 0,10 0,0</coordinates></LinearRing></outerBoundaryIs><innerBoundaryIs><LinearRing><coordinates>1,1 9,1 9,9 1,9 1,1</coordinates></LinearRing></innerBoundaryIs></Polygon>');
     }
@@ -91,7 +91,6 @@ class kml extends PHPUnit_Framework_TestCase
     {
         $geom = $this->decoder->geomFromText('<MultiGeometry><Point><coordinates>3.5,5.6</coordinates></Point><Point><coordinates>4.8,10.5</coordinates></Point><Point><coordinates>10,10</coordinates></Point></MultiGeometry>');
         $this->assertEquals($geom->toKML(), '<MultiGeometry><Point><coordinates>3.5,5.6</coordinates></Point><Point><coordinates>4.8,10.5</coordinates></Point><Point><coordinates>10,10</coordinates></Point></MultiGeometry>');
-
     }
 
     public function testEmptyMultiGeometry()
@@ -104,7 +103,7 @@ class kml extends PHPUnit_Framework_TestCase
     {
         $geom = $this->decoder->geomFromText('<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString></MultiGeometry>');
         $this->assertEquals($geom->toKML(), '<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString></MultiGeometry>');
-
+        
         $geom = $this->decoder->geomFromText('<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString><LineString><coordinates>10,10 10,20 20,20 20,15</coordinates></LineString></MultiGeometry>');
         $this->assertEquals($geom->toKML(), '<MultiGeometry><LineString><coordinates>3.5,5.6 4.8,10.5 10,10</coordinates></LineString><LineString><coordinates>10,10 10,20 20,20 20,15</coordinates></LineString></MultiGeometry>');
     }
@@ -162,11 +161,17 @@ class kml extends PHPUnit_Framework_TestCase
 
     public function testFullDoc()
     {
-        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Placemark><Point><coordinates>10,10</coordinates></Point></Placemark></kml>'); // <?php <-- vim syntax goes crazy
+        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Placemark><Point><coordinates>10,10</coordinates></Point></Placemark></kml>');
+
+        // <?php <-- vim syntax goes crazy
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
-        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Point><coordinates>10,10</coordinates></Point></kml>'); // <?php <-- vim syntax goes crazy
+        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Point><coordinates>10,10</coordinates></Point></kml>');
+
+        // <?php <-- vim syntax goes crazy
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
-        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><Placemark><Point><coordinates>10,10</coordinates></Point></Placemark></Document></kml>'); // <?php <-- vim syntax goes crazy
+        $geom = $this->decoder->geomFromText('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><Placemark><Point><coordinates>10,10</coordinates></Point></Placemark></Document></kml>');
+
+        // <?php <-- vim syntax goes crazy
         $this->assertEquals($geom->toKML(), '<Point><coordinates>10,10</coordinates></Point>');
     }
 
@@ -174,7 +179,7 @@ class kml extends PHPUnit_Framework_TestCase
     {
         $decoder = $this->decoder;
         $kmltext = file_get_contents(__DIR__ . '/files/kml-extended-data.kml');
-        $point   = $decoder->geomFromText($kmltext);
+        $point = $decoder->geomFromText($kmltext);
 
         $attributes = $point->getAttributes();
 

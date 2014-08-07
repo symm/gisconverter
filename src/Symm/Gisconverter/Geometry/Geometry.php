@@ -21,10 +21,10 @@ abstract class Geometry implements GeometryInterface
         $this->attributes = $attributes;
     }
 
-    public function toGeoArray()
-    {
-        throw new UnimplementedMethod(__FUNCTION__, get_called_class());
+    public function getGeomType() {
+        return static::name;
     }
+
 
     public function toGeoJSON()
     {
@@ -54,5 +54,25 @@ abstract class Geometry implements GeometryInterface
     public function __toString()
     {
         return $this->toWKT();
+    }
+
+
+    /**
+     * generates a binary string with the components of a WKB geometry
+     * @return string binary representation of the components of a WKB geometry
+     */
+    public function writeWKB()
+    {
+        throw new UnimplementedMethod(__FUNCTION__, get_called_class());
+    }
+
+    /**
+     * generates a binary string with the whole WKB representation of a geometry
+     * @param  boolean $write_as_hex if true, return the hex representation of the data
+     * @return string  WKB representation of a geometry
+     */
+    public function toWKB($write_as_hex = false)
+    {
+        throw new UnimplementedMethod(__FUNCTION__, get_called_class());
     }
 }
