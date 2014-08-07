@@ -69,11 +69,14 @@ class Point extends Geometry
         return "<wpt lon=\"{$this->lon}\" lat=\"{$this->lat}\"></wpt>";
     }
 
+    public function toGeoArray()
+    {
+        return array ('type' => static::name, 'coordinates' => array($this->lon, $this->lat));
+    }
+
     public function toGeoJSON()
     {
-        $value = (object) array ('type' => static::name, 'coordinates' => array($this->lon, $this->lat));
-
-        return json_encode($value);
+        return json_encode((object) $this->toGeoArray());
     }
 
     public function equals(Geometry $geom)
