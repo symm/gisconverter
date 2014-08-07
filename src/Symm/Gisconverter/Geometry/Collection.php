@@ -47,9 +47,9 @@ abstract class Collection extends Geometry
             }
         };
 
-        $value = (object) array('type' => static::name, 'coordinates' => call_user_func($recursiveJSON, $this));
+        return array('type' => static::name, 'coordinates' => call_user_func($recursiveJSON, $this));
     }
-
+    
     public function toGeoJSON()
     {
         return json_encode((object) $this->toGeoArray());
